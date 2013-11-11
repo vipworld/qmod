@@ -1,0 +1,11 @@
+{
+  "name": "qmod",
+  "version": "0.1.0",
+  "keywords": [
+    "querystring",
+    "middleware"
+  ],
+  "dependencies": {
+    "qs": "~0.6.5"
+  }
+}
