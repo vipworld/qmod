@@ -2,7 +2,7 @@ qmod
 ====
 
 Serverside (as express middleware)
-==
+====
 
 ```
 app.use(function(req, res, next) {
@@ -20,16 +20,23 @@ app.use(function(req, res, next) {
 ```
 
 Browserside
-==
+====
 
 API
-==
-
+====
+```
 var qmod = new Qmod('user=holmes');
 qmod().set('user', 'sherlock').toString();
 // -> user=sherlock;
 qmod().set('user', 'sherlock').toObj();
 // -> { user: 'sherlock' };
+```
+pagination
+======
+```
+var qmod = new Qmod('page=1');
+qmod().inc(page)
+// -> page=2
+```
 
-var qmod = new Qmod('
 
