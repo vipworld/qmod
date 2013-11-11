@@ -20,3 +20,16 @@ app.use(function(req, res, next) {
 ```
 
 Browserside
+==
+
+API
+==
+
+var qmod = new Qmod('user=holmes');
+qmod().set('user', 'sherlock').toString();
+// -> user=sherlock;
+qmod().set('user', 'sherlock').toObj();
+// -> { user: 'sherlock' };
+
+var qmod = new Qmod('
+
