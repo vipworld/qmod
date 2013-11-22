@@ -1,6 +1,8 @@
 qmod
 ====
 
+Qmod makes it easier to work with query strings by providing the ability to easily manipulate strings and switching between strings and objects.
+
 Serverside (as express middleware)
 ====
 
