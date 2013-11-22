@@ -20,6 +20,14 @@ app.use(function(req, res, next) {
 });
 ```
 
+In Jade:
+
+```
+a(href=qmod().inc('page').toString()) Next Page
+```
+
+
+
 Browserside
 ====
 ```
