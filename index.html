@@ -37,7 +37,8 @@
 <h1>
 <a name="serverside-as-express-middleware" class="anchor" href="#serverside-as-express-middleware"><span class="octicon octicon-link"></span></a>Serverside (as express middleware)</h1>
 
-<pre><code>app.use(function(req, res, next) {
+<pre><code>var Qmod = require('qmod');
+app.use(function(req, res, next) {
   res.locals.qmod = function(res.querystring) {
     var url = req.originalUrl
       , idx = url.indexOf('?') &gt; -1 ? url.indexOf('?') : false
@@ -51,8 +52,16 @@
 });
 </code></pre>
 
+<p>In Jade:</p>
+
+<pre><code>a(href=qmod().inc('page').toString()) Next Page
+</code></pre>
+
 <h1>
 <a name="browserside" class="anchor" href="#browserside"><span class="octicon octicon-link"></span></a>Browserside</h1>
+
+<pre><code>&lt;script type='text/javascript' src='qmod.js'&gt;
+</code></pre>
 
 <h1>
 <a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h1>
