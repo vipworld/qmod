@@ -1,11 +1,15 @@
 {
   "name": "qmod",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "keywords": [
     "querystring",
     "middleware"
   ],
   "dependencies": {
-    "qs": "~0.6.5"
+    "qs": "~0.6.5",
+    "should": "~2.1.0"
+  },
+  "devDependencies": {
+    "should": "~2.1.0"
   }
 }
