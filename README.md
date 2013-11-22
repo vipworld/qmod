@@ -5,6 +5,7 @@ Serverside (as express middleware)
 ====
 
 ```
+var Qmod = require('qmod');
 app.use(function(req, res, next) {
   res.locals.qmod = function(res.querystring) {
     var url = req.originalUrl
@@ -21,6 +22,9 @@ app.use(function(req, res, next) {
 
 Browserside
 ====
+```
+<script type='text/javascript' src='qmod.js'>
+```
 
 API
 ====
