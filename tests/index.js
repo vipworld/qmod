@@ -48,6 +48,12 @@ describe('Qmod', function() {
       var newQ = qmod().get('stack');
       newQ.should.eql({ name: 'admin', permissions: 'superuser' });
     });
+
+    it('should be able to read arrays', function() {
+      var qmod = qm(samples.pages);
+      var newQ = qmod().get('series');
+      newQ.should.eql(['1','2']);
+    });
   });
 
   describe('#inc', function() {
