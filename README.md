@@ -1,7 +1,7 @@
 qmod
 ====
 
-Qmod makes it easier to work with query strings by providing the ability to easily manipulate strings and switching between strings and objects.
+Qmod makes it easier to work with query strings by providing the ability to easily manipulate strings and to switch between strings and objects.
 
 Serverside (as express middleware)
 ====
@@ -34,6 +34,12 @@ Browserside
 ====
 ```
 <script type='text/javascript' src='qmod.js'>
+<script type='text/javascript'>
+  var url = window.location.search;
+  url = url.replace("?", '');
+  var qmod = new Qmod(url);
+  var href = qmod().set(key, value).toString();
+</script>
 ```
 
 API
@@ -49,7 +55,8 @@ pagination
 ======
 ```
 var qmod = new Qmod('page=1');
-qmod().inc(page)
+qmod().inc('page');
+// -> page=2
 // -> page=2
 ```
 
