@@ -27,14 +27,8 @@ Browserside
 ```
 <script type='text/javascript' src='qmod.js'>
 <script type='text/javascript'>
-<<<<<<< HEAD
   var qmod = new Qmod(window.location.search);
-=======
-  var url = window.location.search;
-  url = url.replace("?", '');
-  var qmod = new Qmod(url);
-  var href = qmod().set(key, value).toString();
->>>>>>> 68f154da0731fac5d16e6ef549b338c859a1d109
+  var href = qmod().set('key', 'value').toString();
 </script>
 ```
 
