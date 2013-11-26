@@ -8,17 +8,9 @@ Serverside (as express middleware)
 
 ```
 var Qmod = require('qmod');
+var url  = require('url');
 app.use(function(req, res, next) {
-  res.locals.qmod = function(res.querystring) {
-    var url = req.originalUrl
-      , idx = url.indexOf('?') > -1 ? url.indexOf('?') : false
-      , qs
-      , qmod = null;
-    if(idx) {
-      qs = url.substr(idx + 1);
-      res.locals.qmod = new Qmod(qs);
-    }
-  };
+  res.locals.qmod = new Qmod(url.parse(req.originalUrl).search);
 });
 ```
 
@@ -34,6 +26,9 @@ Browserside
 ====
 ```
 <script type='text/javascript' src='qmod.js'>
+<script type='text/javascript'>
+  var qmod = new Qmod(window.location.search);
+</script>
 ```
 
 API

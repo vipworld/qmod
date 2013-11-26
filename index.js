@@ -25,6 +25,7 @@ function extractBrackets(str) {
 
 function Qmod(querystring) {
   var self = this;
+  querystring = decodeURIComponent(querystring.replace(/^\?/, ''));
   return function() {
     self.mod = qs.parse(querystring);
     return self;

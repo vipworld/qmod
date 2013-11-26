@@ -9,6 +9,20 @@ var samples = {
   nested: 'stack[name]=admin&stack[permissions]=superuser'
 };
 describe('Qmod', function() {
+  describe('#initialize', function() {
+    it('should remove a leading ?', function() {
+      var qmod = qm('?' + samples.dir);
+      var newQ = qmod().get('dir');
+      newQ.should.equal('asc');
+    });
+
+    it('should return a function', function() {
+      var qmod = qm(samples.dir);
+      qmod.should.be.type('function');
+      qmod().should.be.type('object');
+    });
+  });
+
   describe('#set', function() {
     it('should be able to set a query param to a string', function() {
       var qmod = qm(samples.dir);
