@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Qmod : " />
+    <meta name="description" content="Qmod : query string modification" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/vipworld/qmod">View on GitHub</a>
 
           <h1 id="project_title">Qmod</h1>
-          <h2 id="project_tagline"></h2>
+          <h2 id="project_tagline">query string modification</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/vipworld/qmod/zipball/master">Download this project as a .zip file</a>
@@ -34,23 +34,15 @@
         <h1>
 <a name="qmod" class="anchor" href="#qmod"><span class="octicon octicon-link"></span></a>qmod</h1>
 
-<p>Qmod makes it easier to work with query strings by providing the ability to easily manipulate strings and switching between strings and objects.</p>
+<p>Qmod makes it easier to work with query strings by providing the ability to easily manipulate strings and to switch between strings and objects.</p>
 
 <h1>
 <a name="serverside-as-express-middleware" class="anchor" href="#serverside-as-express-middleware"><span class="octicon octicon-link"></span></a>Serverside (as express middleware)</h1>
 
 <pre><code>var Qmod = require('qmod');
+var url  = require('url');
 app.use(function(req, res, next) {
-  res.locals.qmod = function(res.querystring) {
-    var url = req.originalUrl
-      , idx = url.indexOf('?') &gt; -1 ? url.indexOf('?') : false
-      , qs
-      , qmod = null;
-    if(idx) {
-      qs = url.substr(idx + 1);
-      res.locals.qmod = new Qmod(qs);
-    }
-  };
+  res.locals.qmod = new Qmod(url.parse(req.originalUrl).search);
 });
 </code></pre>
 
@@ -63,6 +55,10 @@ app.use(function(req, res, next) {
 <a name="browserside" class="anchor" href="#browserside"><span class="octicon octicon-link"></span></a>Browserside</h1>
 
 <pre><code>&lt;script type='text/javascript' src='qmod.js'&gt;
+&lt;script type='text/javascript'&gt;
+  var qmod = new Qmod(window.location.search);
+  var href = qmod().set('key', 'value').toString();
+&lt;/script&gt;
 </code></pre>
 
 <h1>
@@ -79,7 +75,7 @@ qmod().set('user', 'sherlock').toObj();
 <a name="pagination" class="anchor" href="#pagination"><span class="octicon octicon-link"></span></a>pagination</h1>
 
 <pre><code>var qmod = new Qmod('page=1');
-qmod().inc(page)
+qmod().inc('page');
 // -&gt; page=2
 </code></pre>
       </section>
