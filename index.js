@@ -1,4 +1,5 @@
 var qs  = require('qs');
+var url = require('url');
 
 function overwrite(orig, obj) {
   for(var n in obj) {
@@ -23,12 +24,14 @@ function extractBrackets(str) {
   return expansion;
 }
 
-function Qmod(querystring) {
+function Qmod(fullUrl, options) {
+  fullUrl = decodeURI(fullUrl);
+  var parsed = url.parse(fullUrl);
   var self = this;
-  querystring = decodeURIComponent(querystring);
-  querystring = querystring.replace(/^\?/, '');
+
   return function() {
-    self.mod = qs.parse(querystring);
+    self.mod  = qs.parse(parsed.query);
+    self.path = parsed.pathname;
     return self;
   }
 }
@@ -74,7 +77,7 @@ Qmod.prototype.toObj = function() {
 };
 
 Qmod.prototype.toString = function() {
-  return qs.stringify(this.mod);
+  return [this.path, qs.stringify(this.mod)].join('?');
 };
 
 Qmod.prototype.getInt = function(key) {
