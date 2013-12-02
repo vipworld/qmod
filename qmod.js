@@ -36,6 +36,7 @@ function Qmod(fullUrl, options) {
     return self;
   }
 }
+window.Qmod = Qmod;
 
 Qmod.prototype.set = function(key, val) {
   var arrayMatch = key.match(/\[.*\]$/);
