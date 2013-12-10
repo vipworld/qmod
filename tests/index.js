@@ -28,6 +28,16 @@ describe('Qmod', function() {
     });
   });
 
+  describe('#extractBrackets', function() {
+    it('should expand nested brackets into array', function() {
+      Qmod.extractBrackets("root[b1][b2]").should.eql([ "root", "[b1]", "[b2]" ]);
+    });
+
+    it('should handle unclosed bracket', function() {
+      Qmod.extractBrackets("root[b1][b2").should.eql([ "root[b1][b2" ]);
+    });
+  });
+
   describe('#set', function() {
     it('should be able to set a query param to a string', function() {
       var qmod = qm(samples.dir);
@@ -59,6 +69,12 @@ describe('Qmod', function() {
       var newQ = qmod().set('user', { name: 'tom', animal: 'cat' }).toString();
       newQ.should.eql(exPath + 'user[name]=tom&user[animal]=cat');
     });
+
+    it('should be able to set multiple params using object', function() {
+      var qmod = qm([ samples.users, samples.pages ].join('&'));
+      var newQ = qmod().set({ user: [ 'jekyll', 'hyde' ], page: 7 }).toString();
+      newQ.should.equal(exPath + "user[0]=jekyll&user[1]=hyde&page=7&series[0]=1&series[1]=2");
+    });
   });
 
   describe('#get', function() {
@@ -72,6 +88,19 @@ describe('Qmod', function() {
       var qmod = qm(samples.pages);
       var newQ = qmod().get('series');
       newQ.should.eql(['1','2']);
+    });
+  });
+
+  describe('#remove', function() {
+    it('should be able to remove an item and return new string', function() {
+      var qmod = qm(samples.dir);
+      var newQ = qmod().remove('dir').toString();
+      newQ.should.eql(exPath + 'order=count');
+    });
+    it('should be able to remove an item and return new string', function() {
+      var qmod = qm(samples.dir);
+      var newQ = qmod().remove('dir').toObj();
+      newQ.should.eql({ order: 'count' });
     });
   });
 

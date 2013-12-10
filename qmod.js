@@ -10,17 +10,21 @@ function overwrite(orig, obj) {
 
 function extractBrackets(str) {
   var expansion = [];
-  var bracketRe = /\[[^\[\]]*\]/g;
-  var baseExtRe = /^([^\[\]]+)(\[.*\])?$/;
-  var baseExt   = str.match(baseExtRe);
-  var base = baseExt[1];
-  expansion.push(base);
-  var ext  = baseExt[2];
-  if (!ext) return expansion;
-  var result = bracketRe.exec(ext);
-  while(result) {
-    expansion.push(result[0]);
-    result = bracketRe.exec(ext);
+  try {
+    var bracketRe = /\[[^\[\]]*\]/g;
+    var baseExtRe = /^([^\[\]]+)(\[.*\])?$/;
+    var baseExt   = str.match(baseExtRe);
+    var base = baseExt[1];
+    expansion.push(base);
+    var ext  = baseExt[2];
+    if (!ext) return expansion;
+    var result = bracketRe.exec(ext);
+    while(result) {
+      expansion.push(result[0]);
+      result = bracketRe.exec(ext);
+    }
+  } catch (e) {
+    expansion.push(str);
   }
   return expansion;
 }
@@ -38,13 +42,23 @@ function Qmod(fullUrl, options) {
 }
 window.Qmod = Qmod;
 
-Qmod.prototype.set = function(key, val) {
+function _set(key, val) {
   var arrayMatch = key.match(/\[.*\]$/);
   if (arrayMatch) {
     var obj = qs.parse([key, val].join('='));
     overwrite(this.mod, obj);
   } else {
     this.mod[key] = val;
+  }
+}
+
+Qmod.prototype.set = function(key, val) {
+  if ('object' === typeof key) {
+    for(var k in key) {
+      _set.call(this, k, key[k]);
+    }
+  } else {
+    _set.call(this, key, val);
   }
   return this;
 };
@@ -102,6 +116,10 @@ Qmod.prototype.dec = function(key) {
     this.set(key, --num);
   return this;
 };
+
+// expose helper functions
+Qmod.extractBrackets = extractBrackets;
+Qmod.overwrite       = overwrite;
 
 module.exports = Qmod;
 
